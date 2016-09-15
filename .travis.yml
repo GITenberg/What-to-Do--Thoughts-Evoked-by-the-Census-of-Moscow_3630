@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: IkATZdlzxU9Vv1LF0U3UkbHUktWRaWyM+r1I/EVMapxCzxJUEWX46vGLsCdhqGmnlxHxSjNcM4hru61FE5kc1FODGR6xQqiszLV7HTHTVTe/zq4/x4DKAtPBqqeZJlIzFsQQZ7gZ8DUwSlTAKNtkjZIS5Mr+z5ddARPKdFFP9tp3EZjD4U02B2BrGhUizo7yW5U1fpOzkbjB17uqi0jrD/4ICk9W6t5oBExRfaaEgdi/RoR91upcadiCPfnvfUw27kDU9wbwvLo3nt3772CsMNXIqUN2JA3SqoqQPl2giQttwCoCKAcwVx0LHUcawr1oBqHHRSVgR8tYCaz6zCPJHqw31yPJKMfehPpHsyCS67Co6++uwAdZkpY5S2c4Z+2CejClz0SIYVTCC4ZDIvBnfLruk2JYHdlDanVfoowGFKp1GLcv+q3MRF8c/5RvHxd8IkoDLSA5gfncIQpN+hWRrIcvzR+w+q7XkXWJqiUG950Gsg2KLLpdQBXX4IVIwAEICst/tJvBoyfwvf4KX9pxcZECdoJrk0Z/7vjK4EuCsLPlXuKTvap8FhzdS1w94oIdOubASDL/AJHl07ykXZ+SmOnDomLEmJYBh0no4WH2FvXFBd7Lc0ouY+9pnq7y4647LbM2us7ilcVxmCJ72H1fQn00FvScGV4jh634QgzijXE=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/What-to-Do--Thoughts-Evoked-by-the-Census-of-Moscow_3630
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
