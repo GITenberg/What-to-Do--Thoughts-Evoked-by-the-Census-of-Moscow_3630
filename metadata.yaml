@@ -1,5 +1,5 @@
 _repo: What-to-Do--Thoughts-Evoked-by-the-Census-of-Moscow_3630
-_version: 0.1.0
+_version: 0.2.0
 contributor:
   translator:
     agent_name: Hapgood, Isabel Florence
@@ -9,6 +9,9 @@ contributor:
     gutenberg_agent_id: '33608'
     url: http://www.gutenberg.org/2009/agents/33608
     wikipedia: http://en.wikipedia.org/wiki/Isabel_Florence_Hapgood
+covers:
+- cover_type: generated
+  image_path: cover.png
 creator:
   author:
     agent_name: Tolstoy, Leo, graf
@@ -23,6 +26,8 @@ creator:
     url: http://www.gutenberg.org/2009/agents/136
     wikipedia: http://en.wikipedia.org/wiki/Leo_Tolstoy
 description: ''
+edition_identifiers:
+  edition_id: http://www.gutenberg.org/ebooks/3630#What-to-Do--Thoughts-Evoked-by-the-Census-of-Moscow
 gutenberg_issued: '2003-01-01'
 gutenberg_type: Text
 identifiers:
